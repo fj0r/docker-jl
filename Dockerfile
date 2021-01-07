@@ -3,6 +3,7 @@ FROM nnurphy/ub
 ENV JULIA_HOME=/opt/julia
 ENV PATH=${JULIA_HOME}/bin:$PATH
 RUN set -eux \
+  ; mkdir -p ${JULIA_HOME} \
   ; julia_version=$(curl -sSL https://julialang.org/downloads/ | pup '#current_stable_release > a text{}' | awk '{print $4}') \
   ; julia_version_n=$(echo $julia_version | node -e "console.log(fs.readFileSync('/dev/stdin', 'utf8').slice(1))") \
   ; julia_version_m=$(echo $julia_version_n | node -e "console.log(fs.readFileSync('/dev/stdin', 'utf8').split('.').slice(0,2).join('.'))") \
