@@ -9,3 +9,8 @@ RUN set -eux \
   ; julia_version_m=$(echo $julia_version_n | node -e "console.log(fs.readFileSync('/dev/stdin', 'utf8').split('.').slice(0,2).join('.'))") \
   ; curl https://julialang-s3.julialang.org/bin/linux/x64/${julia_version_m}/julia-${julia_version_n}-linux-x86_64.tar.gz \
     | tar xz -C ${JULIA_HOME} --strip-components 1
+
+RUN set -eux \
+  ; nvim -u /etc/skel/.config/nvim/init.vim --headless +"CocInstall -sync coc-julia" +qa \
+  #; npm config set registry https://registry.npm.taobao.org \
+  ; npm cache clean -f
