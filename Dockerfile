@@ -8,7 +8,8 @@ RUN set -eux \
   ; julia_version_n=$(echo $julia_version | node -e "console.log(fs.readFileSync('/dev/stdin', 'utf8').slice(1))") \
   ; julia_version_m=$(echo $julia_version_n | node -e "console.log(fs.readFileSync('/dev/stdin', 'utf8').split('.').slice(0,2).join('.'))") \
   ; curl https://julialang-s3.julialang.org/bin/linux/x64/${julia_version_m}/julia-${julia_version_n}-linux-x86_64.tar.gz \
-    | tar xz -C ${JULIA_HOME} --strip-components 1
+    | tar xz -C ${JULIA_HOME} --strip-components 1 \
+  ; julia -e 'using Pkg; Pkg.add("LanguageServer"); Pkg.add("SymbolServer"); Pkg.add("StaticLint")'
 
 RUN set -eux \
   ; nvim -u /etc/skel/.config/nvim/init.vim --headless +"CocInstall -sync coc-julia" +qa \
